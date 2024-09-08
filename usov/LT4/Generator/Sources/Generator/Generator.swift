@@ -41,13 +41,12 @@ public class UniqueNumberAlg3: UniqueNumberGenerateAlgorithm {
     public init(){}
 
     public func generate() -> Int {
-        let newNumber = Int(Date().timeIntervalSinceNow)
-        if newNumber <= lastNumber {
-            lastNumber += 1
-        } else {
-            lastNumber = newNumber
-        }
-        return lastNumber
+        let date = Date()
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.second], from: date)
+        let newNumber = components.second! + lastNumber
+        lastNumber = newNumber
+        return newNumber
     }
 }
 
@@ -72,6 +71,7 @@ public class Generator: GeneratorBase {
     public func generate(count: Int) -> [Int] {
         var result: [Int] = []
         for _ in 0..<count {
+            Thread.sleep(forTimeInterval: 1)
             result.append(algorithm.generate())
         }
         return result
